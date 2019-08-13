@@ -1,5 +1,9 @@
+// create necessary iframe
+createIframe();
+
 document.addEventListener("click", function(el) {
-  el.preventDefault();
+  //if (el.srcElement.tagName != 'BUTTON')
+    el.preventDefault();
 
   console.log("something was clicked");
   checkElementType(el);
@@ -24,6 +28,7 @@ function handleImgEl(el) {
   //if (el.src)
   console.log("within handleImgEl function");
   console.log(el.src);
+  triggerDownload(el.src);
 }
 
 function handleLinkEl(el) {
@@ -35,4 +40,25 @@ function handleLinkEl(el) {
 function handleAnomaly(el) {
   //if (el.src)
   console.log("within handleAnomaly function");
+}
+
+function createIframe() {
+  var form = document.createElement('form'),
+      button = document.createElement('button');
+
+    form.id = "DownloadForm";
+    form.method = 'get';
+    form.action = '';
+    form.style.display = 'none';
+    button.type = 'submit';
+    button.id = 'DownloadFormButton'
+  form.appendChild(button);
+  document.body.appendChild(form);
+}
+
+function triggerDownload(elSrc) {
+  var form = document.getElementById('DownloadForm'),
+      button = document.getElementById('DownloadFormButton');
+  form.action = elSrc;
+  button.click();
 }
